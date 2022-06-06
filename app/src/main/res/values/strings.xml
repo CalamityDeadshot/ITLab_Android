@@ -141,5 +141,9 @@
     <string name="Null">null</string>
     <string name="Select_a_file">Select a file</string>
     <string name="Upload_a_file">Upload a file</string>
+    <string name="download">Download</string>
+    <string name="byDate">by date</string>
+    <string name="byUser">by user</string>
+    <string name="filter">filter</string>
 
 </resources>

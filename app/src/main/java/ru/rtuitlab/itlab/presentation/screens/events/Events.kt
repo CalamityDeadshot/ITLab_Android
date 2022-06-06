@@ -27,12 +27,13 @@ import ru.rtuitlab.itlab.presentation.ui.components.top_app_bars.CollapsibleScro
 import ru.rtuitlab.itlab.presentation.ui.components.top_app_bars.heightDelta
 import ru.rtuitlab.itlab.presentation.utils.AppScreen
 import ru.rtuitlab.itlab.presentation.utils.EventTab
+import ru.rtuitlab.itlab.presentation.utils.singletonViewModel
 
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Composable
 fun Events(
-	eventsViewModel: EventsViewModel
+	eventsViewModel: EventsViewModel = singletonViewModel()
 ) {
 	val eventsResource by eventsViewModel.eventsListResponsesFlow.collectAsState()
 	val userEventsResource by eventsViewModel.userEventsListResponsesFlow.collectAsState()

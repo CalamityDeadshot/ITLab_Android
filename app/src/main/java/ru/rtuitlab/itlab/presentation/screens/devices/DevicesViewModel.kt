@@ -18,6 +18,7 @@ import ru.rtuitlab.itlab.data.remote.api.users.models.User
 import ru.rtuitlab.itlab.data.remote.api.users.models.UserClaimCategories
 import ru.rtuitlab.itlab.data.remote.api.users.models.UserResponse
 import ru.rtuitlab.itlab.data.repository.DevicesRepository
+import ru.rtuitlab.itlab.data.repository.UsersRepository
 import java.sql.Time
 import java.time.Instant
 import javax.inject.Inject
@@ -25,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DevicesViewModel @Inject constructor(
         private val devicesRepo: DevicesRepository,
-        authStateStorage:  AuthStateStorage
+        private val usersRepository: UsersRepository,
+        private val authStateStorage:  AuthStateStorage
 ) : ViewModel() {
 
         private val userClaimsFlow = authStateStorage.userClaimsFlow
@@ -37,7 +39,6 @@ class DevicesViewModel @Inject constructor(
                         userClaimsFlow.collect {
 
                                 isAccesible = it.contains(UserClaimCategories.DEVICES.EDIT)
-                                Log.d("DevicesViewModel","$isAccesible")
                                 _accesibleFlow.value = isAccesible
                         }
                 }
@@ -196,27 +197,26 @@ class DevicesViewModel @Inject constructor(
         }
 
         private fun fetchDevices() = _devicesResponsesFlow.emitInIO(viewModelScope) {
-                val time1:Long = Time.from(Instant.now()).time
                 var resources: Resource<MutableList<Pair<DeviceDetailDto, UserResponse?>>> = Resource.Loading
 
+                var usersList: MutableList<UserResponse>? = null
+                usersRepository.fetchUsers().handle(
+                        onSuccess = { users ->
+                                usersList = users as MutableList<UserResponse>
+                        }
+                )
                 devicesRepo.fetchDevices().handle (
                         onSuccess = { details ->
                                 val listPair = mutableListOf<Pair<DeviceDetailDto, UserResponse?>>()
 
-                                details.map {
+                                details.map { detail ->
                                         var resource: Pair<DeviceDetailDto, UserResponse?>
-                                        resource = it to null
-                                        Log.d("DeviceViewModel",it.toString())
-                                        if(it.ownerId!=null) {
-                                                devicesRepo.fetchOwner(it.ownerId).handle(
-                                                        onSuccess = { userResponce ->
-                                                                resource = it to userResponce
-                                                        }
-                                                )
+                                        resource = detail to null
+                                        if(detail.ownerId!=null) {
+                                                val sender = usersList?.find { it.id == detail.ownerId }
+                                                resource = detail to sender
                                         }
                                         listPair.add(resource)
-
-
 
                                 }
                                 resources = Resource.Success(listPair)
@@ -224,8 +224,6 @@ class DevicesViewModel @Inject constructor(
                         },
                         onError = {resources = Resource.Error(it)}
                 )
-                val time2:Long = Time.from(Instant.now()).time
-                Log.d("TIME","${time2-time1}")
                 resources
 
         }
@@ -242,7 +240,7 @@ class DevicesViewModel @Inject constructor(
 
         private fun fetchUsers() =
                 _userResponsesFlow.emitInIO(viewModelScope) {
-                        devicesRepo.fetchUsers()
+                        usersRepository.fetchUsers()
                 }
 
         fun onUserResourceSuccess(users: List<UserResponse>) {

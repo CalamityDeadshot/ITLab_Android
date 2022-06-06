@@ -17,12 +17,13 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ru.rtuitlab.itlab.R
 import ru.rtuitlab.itlab.presentation.screens.events.components.EventNotificationCard
 import ru.rtuitlab.itlab.presentation.ui.components.LoadingError
+import ru.rtuitlab.itlab.presentation.utils.singletonViewModel
 
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Composable
 fun EventsNotifications(
-	eventsViewModel: EventsViewModel
+	eventsViewModel: EventsViewModel = singletonViewModel()
 ) {
 	val notificationsResource by eventsViewModel.invitationsResourceFlow.collectAsState()
 

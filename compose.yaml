@@ -1,0 +1,11 @@
+services:
+  android-builder:
+    build:
+      dockerfile: deploy/Dockerfile-release
+      context: .
+    volumes:
+      - ./output-release:/app/app/build/outputs/apk/
+    environment:
+      - SIGNING_KEY_ALIAS=${SIGNING_KEY_ALIAS?Set environment variable for key alias SIGNING_KEY_ALIAS}
+      - SIGNING_KEY_PASSWORD=${SIGNING_KEY_PASSWORD?Set environment variable for key password SIGNING_KEY_PASSWORD}
+      - SIGNING_STORE_PASSWORD=${SIGNING_STORE_PASSWORD?Set environment variable for store password SIGNING_STORE_PASSWORD}

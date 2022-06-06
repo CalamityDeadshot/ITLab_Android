@@ -43,8 +43,8 @@ class UsersRepository @Inject constructor(
             UserPropertyEditRequest(id, value)
         )
     }
- suspend fun getUsers() = usersApi.getUsers()
-    suspend fun getUserById(userId:String):UserResponse {
-        return usersApi.getUser(userId)
+
+    suspend fun getUserById(userId:String) = handler {
+        usersApi.getUser(userId)
     }
 }

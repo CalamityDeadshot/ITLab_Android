@@ -1,0 +1,14 @@
+.git/
+.github/
+.idea/
+.vscode/
+deploy/
+**/*.md
+docker-compose*.yml
+docker-compose*.yaml
+compose*.yml
+compose*.yaml
+azure-pipelines.yml
+.*ignore
+output/
+.env

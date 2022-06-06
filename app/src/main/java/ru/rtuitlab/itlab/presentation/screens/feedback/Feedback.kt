@@ -23,12 +23,13 @@ import ru.rtuitlab.itlab.presentation.screens.feedback.components.FeedbackCard
 import ru.rtuitlab.itlab.presentation.ui.components.LoadingError
 import ru.rtuitlab.itlab.presentation.ui.extensions.TransitionState
 import ru.rtuitlab.itlab.presentation.ui.extensions.transitionState
+import ru.rtuitlab.itlab.presentation.utils.singletonViewModel
 
 @ExperimentalTransitionApi
 @ExperimentalAnimationApi
 @ExperimentalPagerApi
 @Composable
-fun Feedback(feedbackViewModel: FeedbackViewModel) {
+fun Feedback(feedbackViewModel: FeedbackViewModel = singletonViewModel()) {
 
 	val incomingFeedbackResource by feedbackViewModel.incomingFeedbackResponsesFlow.collectAsState()
 	val readFeedbackResource by feedbackViewModel.readFeedbackResponsesFlow.collectAsState()

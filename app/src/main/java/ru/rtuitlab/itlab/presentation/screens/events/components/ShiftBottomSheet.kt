@@ -28,6 +28,7 @@ import ru.rtuitlab.itlab.presentation.ui.components.IconizedRow
 import ru.rtuitlab.itlab.presentation.ui.components.ImagePosition
 import ru.rtuitlab.itlab.presentation.ui.components.bottom_sheet.BottomSheetViewModel
 import ru.rtuitlab.itlab.presentation.ui.theme.AppColors
+import ru.rtuitlab.itlab.presentation.utils.singletonViewModel
 
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
@@ -37,7 +38,7 @@ fun ShiftBottomSheet(
 	salaries: List<Int>,
 	eventViewModel: EventViewModel,
 	profileViewModel: ProfileViewModel = viewModel(),
-	bottomSheetViewModel: BottomSheetViewModel
+	bottomSheetViewModel: BottomSheetViewModel = singletonViewModel()
 ) {
 	Row(
 		modifier = Modifier.fillMaxWidth(),

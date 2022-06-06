@@ -13,10 +13,11 @@ import ru.rtuitlab.itlab.presentation.navigation.LocalNavController
 import ru.rtuitlab.itlab.presentation.screens.employees.components.EmployeeCard
 import ru.rtuitlab.itlab.presentation.ui.components.LoadingError
 import ru.rtuitlab.itlab.presentation.utils.AppScreen
+import ru.rtuitlab.itlab.presentation.utils.singletonViewModel
 
 @Composable
 fun Employees(
-	employeesViewModel: EmployeesViewModel
+	employeesViewModel: EmployeesViewModel = singletonViewModel()
 ) {
 	val usersResource by employeesViewModel.userResponsesFlow.collectAsState()
 	var isRefreshing by remember { mutableStateOf(false) }

@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import ru.rtuitlab.itlab.R
 import ru.rtuitlab.itlab.domain.model.EventDetail
@@ -35,15 +34,15 @@ import ru.rtuitlab.itlab.presentation.ui.components.top_app_bars.SwipingStates
 import ru.rtuitlab.itlab.presentation.ui.extensions.fromIso8601
 import ru.rtuitlab.itlab.presentation.utils.AppBottomSheet
 import ru.rtuitlab.itlab.presentation.utils.AppScreen
-import ru.rtuitlab.itlab.presentation.utils.AppTab
+import ru.rtuitlab.itlab.presentation.utils.singletonViewModel
 
 @ExperimentalPagerApi
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Event(
 	eventViewModel: EventViewModel,
-	bottomSheetViewModel: BottomSheetViewModel,
-	appBarViewModel: AppBarViewModel = viewModel()
+	bottomSheetViewModel: BottomSheetViewModel = singletonViewModel(),
+	appBarViewModel: AppBarViewModel = singletonViewModel()
 ) {
 
 	val eventResource by eventViewModel.eventResourceFlow.collectAsState()

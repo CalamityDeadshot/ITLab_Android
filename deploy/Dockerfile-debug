@@ -1,0 +1,19 @@
+FROM gradle:jdk11
+
+RUN apt-get update
+
+RUN wget -O tools.zip https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip \
+ && unzip -d /android tools.zip
+
+ENV ANDROID_HOME=/android
+ENV PATH=${PATH}:${ANDROID_HOME}:${ANDROID_HOME}/cmdline-tools:${ANDROID_HOME}/cmdline-tools/bin
+
+RUN yes | sdkmanager --sdk_root=/android --licenses
+
+WORKDIR /app
+COPY . .
+
+RUN apt-get install -y dos2unix \
+ && dos2unix gradlew
+
+CMD ./gradlew :app:assembleProdApiDebug --stacktrace

@@ -4,10 +4,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import ru.rtuitlab.itlab.common.ResponseHandler
 import ru.rtuitlab.itlab.data.remote.api.reports.ReportApi
-import ru.rtuitlab.itlab.data.remote.api.reports.models.Report
-import ru.rtuitlab.itlab.data.remote.api.reports.models.ReportDto
-import ru.rtuitlab.itlab.data.remote.api.reports.models.ReportRequest
-import ru.rtuitlab.itlab.data.remote.api.reports.models.ReportSalary
+import ru.rtuitlab.itlab.data.remote.api.reports.models.*
 import javax.inject.Inject
 
 class ReportsRepository @Inject constructor(
@@ -64,5 +61,13 @@ class ReportsRepository @Inject constructor(
 	suspend fun fetchReportById(id: String) = handler{
 		reportApi.getReport(id)
 	}
-
+	suspend fun fetchAllReportsSalaryOfUser(userId:String) = handler{
+		reportApi.getListReportSalary(userId)
+	}
+	suspend fun updateReport(reportId:String,requiredReportSalary: ReportSalaryRequest){
+		reportApi.updateReportSalary(reportId,requiredReportSalary)
+	}
+	suspend fun updateReport(reportId:String,count:Int,description:String){
+		reportApi.updateReportSalary(reportId,ReportSalaryRequest(count,description))
+	}
 }

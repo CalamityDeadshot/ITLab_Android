@@ -1,5 +1,7 @@
+
 package ru.rtuitlab.itlab.presentation.screens.reports
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -26,6 +28,8 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ru.rtuitlab.itlab.R
 import ru.rtuitlab.itlab.data.remote.api.reports.models.Report
 import ru.rtuitlab.itlab.presentation.navigation.LocalNavController
+import ru.rtuitlab.itlab.presentation.screens.micro_file_service.MFSViewModel
+import ru.rtuitlab.itlab.presentation.screens.micro_file_service.components.BaseElements
 import ru.rtuitlab.itlab.presentation.screens.reports.components.NewReportFab
 import ru.rtuitlab.itlab.presentation.ui.components.IconizedRow
 import ru.rtuitlab.itlab.presentation.ui.components.LoadingError
@@ -37,13 +41,16 @@ import ru.rtuitlab.itlab.presentation.ui.extensions.fromIso8601
 import ru.rtuitlab.itlab.presentation.ui.theme.AppColors
 import ru.rtuitlab.itlab.presentation.utils.AppScreen
 import ru.rtuitlab.itlab.presentation.utils.ReportsTab
+import ru.rtuitlab.itlab.presentation.utils.singletonViewModel
 
 val duration = 300
-
+@ExperimentalAnimationApi
+@ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Composable
 fun Reports(
-	reportsViewModel: ReportsViewModel
+	mfsViewModel: MFSViewModel = singletonViewModel(),
+	reportsViewModel: ReportsViewModel = singletonViewModel()
 ) {
 	val reportsResource by reportsViewModel.reportsResponseFlow.collectAsState()
 
@@ -109,7 +116,7 @@ fun Reports(
 											.sortedByDescending { it.id }
 									)
 									ReportsTab.Files -> {
-										// MFS code here
+										BaseElements(mfsViewModel)
 									}
 								}
 

@@ -134,4 +134,8 @@
     //MFS
     <string name="Select_a_file">Выбрать файл</string>
     <string name="Upload_a_file">Загрузить файл</string>
+    <string name="download">Download</string>
+    <string name="byDate">by date</string>
+    <string name="byUser">by user</string>
+    <string name="filter">filter</string>
 </resources>

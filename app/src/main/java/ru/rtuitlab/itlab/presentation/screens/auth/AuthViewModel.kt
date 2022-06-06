@@ -68,7 +68,6 @@ class AuthViewModel @Inject constructor(
 			)
 				.setScopes(*BuildConfig.SCOPES)
 				.build()
-
 			val authIntent = authService.getAuthorizationRequestIntent(authRequest)
 			block(authIntent)
 		}

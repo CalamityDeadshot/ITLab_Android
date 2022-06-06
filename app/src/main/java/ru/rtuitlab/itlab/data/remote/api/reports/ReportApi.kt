@@ -3,6 +3,8 @@ package ru.rtuitlab.itlab.data.remote.api.reports
 import retrofit2.http.*
 import ru.rtuitlab.itlab.data.remote.api.reports.models.ReportDto
 import ru.rtuitlab.itlab.data.remote.api.reports.models.ReportRequest
+import ru.rtuitlab.itlab.data.remote.api.reports.models.ReportSalary
+import ru.rtuitlab.itlab.data.remote.api.reports.models.ReportSalaryRequest
 
 interface ReportApi {
 	@GET("/reports")
@@ -27,4 +29,14 @@ interface ReportApi {
 	suspend fun getReport(
 		@Path("id") reportId:String
 	):ReportDto
+
+	@GET("/api/salary/v1/report/user/{userId}")
+	suspend fun getListReportSalary(
+		@Path("userId") userId:String  //required
+	):ReportSalary
+	@PUT("/api/salary/v1/report/{reportId}")
+	suspend fun updateReportSalary(
+		@Path("reportId") reportId:String, //required
+		@Body reportSalaryRequest: ReportSalaryRequest
+	):ReportSalary
 }

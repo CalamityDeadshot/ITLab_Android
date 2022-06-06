@@ -34,13 +34,14 @@ import ru.rtuitlab.itlab.presentation.ui.components.shared_elements.utils.Shared
 import ru.rtuitlab.itlab.presentation.ui.components.top_app_bars.AppBarViewModel
 import ru.rtuitlab.itlab.presentation.ui.extensions.fromIso8601
 import ru.rtuitlab.itlab.presentation.utils.AppScreen
+import ru.rtuitlab.itlab.presentation.utils.singletonViewModel
 
 @ExperimentalPagerApi
 @ExperimentalAnimationApi
 @Composable
 fun Report(
 	id: String,
-	reportsViewModel: ReportsViewModel,
+	reportsViewModel: ReportsViewModel = singletonViewModel(),
 	appBarViewModel: AppBarViewModel
 ) {
 	val reports by reportsViewModel.reportsResponseFlow.collectAsState()
